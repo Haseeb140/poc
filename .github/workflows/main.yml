@@ -20,7 +20,7 @@ jobs:
         mkdir zips
         ls 
         pwd
-        cp requirement.txt zips
+        cp /home/runner/work/poc/poc/requirement.txt zips
         zip -r combined.zip zips
         echo "name=combined.zip" >> $GITHUB_OUTPUT
 
