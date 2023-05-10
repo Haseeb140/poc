@@ -17,18 +17,15 @@ jobs:
 
     - name: Create combined zip file
       run: |
-        mkdir zips
-        ls 
-        pwd
-        cp /home/runner/work/poc/poc/requirement.txt zips
-        zip -r combined.zip zips
+        ls
+        zip -r combined.zip . -i aip.zip aip1.zip
         echo "name=combined.zip" >> $GITHUB_OUTPUT
 
-      id: create_zip
 
     - name: Upload artifact
       uses: actions/upload-artifact@v3
       with:
         name: combined-zip
-        path: ${{ steps.create_zip.outputs.zip-filename }}
+        path: combined.zip
+
 
