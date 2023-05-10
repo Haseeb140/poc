@@ -17,8 +17,10 @@ jobs:
 
     - name: Create combined zip file
       run: |
-        zip -r combined.zip . -i requirement.txt triangle.py
-        echo "::set-output name=zip-filename::combined.zip"
+        mkdir zips
+        mv requirement.txt triangle.py
+        zip -r combined.zip zips
+        echo "name=combined.zip" >> $GITHUB_OUTPUT
 
       id: create_zip
 
