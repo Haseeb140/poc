@@ -17,13 +17,14 @@ jobs:
 
     - name: Create combined zip file
       run: |
-        pwd
-        ls -l
         zip -r combined.zip . -i requirement.txt triangle.py
-        echo "name=combined.zip" >> $GITHUB_OUTPUT
-        
+        echo "::set-output name=zip-filename::combined.zip"
+
+      id: create_zip
+
     - name: Upload artifact
       uses: actions/upload-artifact@v3
       with:
         name: combined-zip
-        path: combined.zip
+        path: ${{ steps.create_zip.outputs.zip-filename }}
+
