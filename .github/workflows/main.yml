@@ -19,6 +19,7 @@ jobs:
       run: |
         mkdir zips
         ls 
+        pwd
         cp requirement.txt zips
         zip -r combined.zip zips
         echo "name=combined.zip" >> $GITHUB_OUTPUT
