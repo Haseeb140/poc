@@ -20,8 +20,8 @@ jobs:
         pwd
         ls -l
         zip -r combined.zip . -i requirement.txt triangle.py
-        echo "::set-output name=combined_zip::combined.zip"
-
+        echo "name=combined.zip" >> $GITHUB_OUTPUT
+        
     - name: Upload artifact
       uses: actions/upload-artifact@v3
       with:
