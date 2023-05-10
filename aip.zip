@@ -1,0 +1,19 @@
+ROM mcr.microsoft.com/windows:20H2 AS base
+
+# Copy KB5021233 to container
+COPY windows10.0-kb5022834-x64_c58d091338b26bbd3ee10a733681bd3eca8c48ab.msu  .
+
+# Install KB5021233
+RUN powershell.exe -Command Start-Process -FilePath 'wusa.exe' -ArgumentList 'kb5022834-x64.msu', '/quiet', '/norestart' -Wait 
+
+# Download and install .NET SDK 6.0
+RUN curl -SL --output dotnet-sdk-6.0.400-win-x64.exe https://download.visualstudio.microsoft.com/download/pr/9a1d2e89-d785-4493-aaf3-73864627a1ea/245bdfaa9c46b87acfb2afbd10ecb0d0/dotnet-sdk-6.0.400-win-x64.exe \
+    && dotnet-sdk-6.0.400-win-x64.exe /quiet /install \
+    && del /f dotnet-sdk-6.0.400-win-x64.exe
+
+# Download and install ABCpdf
+RUN  curl -SL --output ABCpdf.12.3.0.3.msi  https://www.websupergoo.com/download/ABCpdf.12.3.0.3.msi 
+
+SHELL [ "powershell", "-Command"]
+
+RUN powershell.exe -Command Start-Process C:/ABCpdf.12.3.0.3.msi -ArgumentList '/quiet' -Wait
