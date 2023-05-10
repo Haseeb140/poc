@@ -1,16 +1,27 @@
-name: Calculate Triangle Area
-on: push
+name: Create combined zip file
+
+on:
+  push:
+    branches: main
+
 jobs:
-  calculate-area:
+  build:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-      - name: Install Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: 3.9
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-      - name: Run program
-        run: python triangle_area.py
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Install zip
+      run: sudo apt-get update && sudo apt-get install -y zip
+
+    - name: Create combined zip file
+      run: |
+        zip -r combined.zip requirement.txt triangle.py
+        echo "::set-output name=combined_zip::combined.zip"
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: combined-zip
+        path: combined.zip
