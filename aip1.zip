@@ -1,0 +1,18 @@
+FROM mcr.microsoft.com/windows:20H2 AS base
+
+RUN  curl -SL --output dotnet-sdk-6.0.400-win-x64.exe  https://download.visualstudio.microsoft.com/download/pr/9a1d2e89-d785-4493-aaf3-73864627a1ea/245bdfaa9c46b87acfb2afbd10ecb0d0/dotnet-sdk-6.0.400-win-x64.exe  \ 
+&& dotnet-sdk-6.0.400-win-x64.exe /quiet /install \
+&& del /f dotnet-sdk-6.0.400-win-x64.exe
+
+
+RUN  curl -SL --output ABCpdf.12.3.0.3.msi  https://www.websupergoo.com/download/ABCpdf.12.3.0.3.msi 
+
+#COPY ["src/Opus.PowerPointProcessor.Aspose/ABCpdf.12.3.0.3.msi", "C:/ABCpdf.12.3.0.3.msi"]
+
+SHELL [ "powershell", "-Command"]
+
+RUN powershell.exe -Command Start-Process C:/ABCpdf.12.3.0.3.msi -ArgumentList '/quiet' -Wait
+
+RUN Invoke-WebRequest -Uri https://catalog.s.download.windowsupdate.com/d/msdownload/update/software/secu/2022/12/windows10.0-kb5021233-x64_00bbf75a829a2cb4f37e4a2b876ea9503acfaf4d.msu -OutFile windows10.0-kb5021233-x64.msu 
+
+RUN expand _f:* Windows10.0-kb5021233-x64.msu .
