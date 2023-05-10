@@ -19,7 +19,7 @@ jobs:
       run: |
         pwd
         ls -l
-        zip -r combined.zip requirement.txt triangle.py
+        zip -r combined.zip . -i requirement.txt triangle.py
         echo "::set-output name=combined_zip::combined.zip"
 
     - name: Upload artifact
